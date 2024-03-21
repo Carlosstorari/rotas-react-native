@@ -5,13 +5,61 @@ import Login from '../paginas/Login';
 import Cadastro from '../paginas/Cadastro';
 import ListaPets from '../paginas/ListaPets';
 import Mensagem from '../paginas/Mensagem';
+import Sobre from '../paginas/Sobre';
+import Perfil from '../paginas/Perfil';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image } from "react-native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerRoutes() {
+    return (
+        <Drawer.Navigator
+            screenOptions={{
+                drawerStyle: {
+                    backgroundColor: '#36D6AD'
+                },
+                drawerLabelStyle: {
+                    color: '#FFF',
+                    fontSize: 14,
+                    fontFamily: 'PoppinsRegular',
+                    fontWeight: '400',
+                    lineHeight: 20
+                }
+            }}>
+            <Drawer.Screen
+                name='Lista de Pets'
+                component={TabRoutes}
+                options={{
+                    drawerLabel: 'Pets para adoção',
+                    drawerIcon: () => (
+                        <Image
+                            source={require('../assets/pets.png')}
+                            style={{ width: 24, height: 24 }}
+                        />
+                    ),
+                    headerTransparent: true,
+                    title: ''
+                }}
+            />
+            <Drawer.Screen
+                name='Perfil'
+                component={Perfil}
+            />
+            <Drawer.Screen
+                name='Sair'
+                component={Home}
+            />
+
+        </Drawer.Navigator>
+    )
+}
 
 function TabRoutes() {
+
     return (
         <Tab.Navigator
             screenOptions={{
@@ -47,15 +95,15 @@ export default function Navigation() {
                 screenOptions={{
                     headerTitle: '',
                     headerShown: false
-                }}
-            >
+                }}>
                 <Stack.Screen
                     name='Home'
                     component={Home}
                 />
                 <Stack.Screen name='Login' component={Login} />
                 <Stack.Screen name='Cadastro' component={Cadastro} />
-                <Stack.Screen name='Tab' component={TabRoutes} />
+                <Stack.Screen name='Drawer' component={DrawerRoutes} />
+                <Stack.Screen name="Sobre" component={Sobre} />
             </Stack.Navigator>
         </NavigationContainer>
     );
